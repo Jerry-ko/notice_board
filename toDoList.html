@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script>
+            window.onload = () => {
+                const list = document.querySelector('.list')
+            
+                document.querySelector('#form').addEventListener('submit', (e) => {
+                    e.preventDefault()
+                    const form = new FormData(e.target)
+                    const data = Object.fromEntries(form.entries())
+                    console.log('data', data)
+
+                    for (const key in data) {
+                        localStorage.setItem(key, data[key])
+                    }
+                    getTodo()
+                })
+
+                const getTodo = () => {
+                    const something = localStorage.getItem('something')
+                    const li = document.createElement('li')
+                    li.textContent = something
+                    list.appendChild(li)
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>To do List</h1>
+        
+        <form id="form">
+            <input type="text" name="something" />
+            <input type="submit" value="저장"/>
+        </form>
+
+        <ul class="list"></ul>
+    </body>
+</html>

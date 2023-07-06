@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 만들기</title>
+
+    <style>
+        #form {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            width: 50%;
+        }
+    </style>
+
+    <script>
+        window.onload = () => {
+            
+
+          document.getElementById('form').onsubmit = (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target)
+            const data = Object.fromEntries(formData.entries())
+
+            let list;
+
+            if (!localStorage.getItem('post')) {
+                list=[]
+                list.push(data)
+                localStorage.setItem('post', JSON.stringify(data))
+            } else {
+                list = JSON.parse(localStorage.getItem('post'))
+                list.push(data)
+                localStorage.setItem('post', list)
+            }
+
+         
+
+          
+          }
+        }
+    </script>
+</head>
+<body>
+<!--게시판 생성부터-->
+    <div>
+        <form id="form">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name"/>
+
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title"/>
+            
+            <label for="contents">내용</label>
+            <textarea id="contents" name="contents"></textarea>
+
+            <input type="submit" value="저장"> 
+        </form>
+    </div>
+</body>
+</html>
